@@ -1,6 +1,5 @@
 import logging
 import time
-from random import random
 from typing import Callable, List
 
 import tensorflow_hub as hub
@@ -40,8 +39,7 @@ async def embed(
     )
 ) -> EmbeddingsResponse:
     """Embeds a list of strings, returning a list of floats for every string input"""
-    # embeddings = [i.numpy().tolist() for i in EMBED(payload.strings)]
-    embeddings = [random() for _ in range(len(payload.strings))]
+    embeddings = [i.numpy().tolist() for i in EMBED(payload.strings)]
     return EmbeddingsResponse(embeddings=embeddings, **payload.dict())
 
 
