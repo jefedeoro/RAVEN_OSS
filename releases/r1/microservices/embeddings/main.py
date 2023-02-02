@@ -13,11 +13,13 @@ class EmbeddingsRequest(BaseModel):
 
 
 class EmbeddingsResponse(EmbeddingsRequest):
-    embeddings: List[float]
+    embeddings: List[List[float]]
 
 
 log = logging.getLogger("werkzeug")
 log.setLevel(logging.ERROR)
+# USEv5 is about 100x faster than 4
+EMBED = hub.load("https://tfhub.dev/google/universal-sentence-encoder-large/5")
 
 app = FastAPI()
 
@@ -44,6 +46,4 @@ async def embed(
 
 
 if __name__ == "__main__":
-    # USEv5 is about 100x faster than 4
-    EMBED = hub.load("https://tfhub.dev/google/universal-sentence-encoder-large/5")
     uvicorn.run("main:app", host="0.0.0.0", port=8088, reload=True)
